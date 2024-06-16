@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterPumpStats", "WaterPumpStats\WaterPumpStats.csproj", "{147ECA56-4274-47F2-9DED-3F906868B00A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjectWaterPumpStats", "TestProjectWaterPumpStats\TestProjectWaterPumpStats.csproj", "{06C9746D-6ADE-4A53-8DF9-785D2971B5B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{147ECA56-4274-47F2-9DED-3F906868B00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{147ECA56-4274-47F2-9DED-3F906868B00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{147ECA56-4274-47F2-9DED-3F906868B00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{147ECA56-4274-47F2-9DED-3F906868B00A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06C9746D-6ADE-4A53-8DF9-785D2971B5B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06C9746D-6ADE-4A53-8DF9-785D2971B5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06C9746D-6ADE-4A53-8DF9-785D2971B5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06C9746D-6ADE-4A53-8DF9-785D2971B5B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A2A3A13A-84A9-4403-82E7-354ACC37A793}
+	EndGlobalSection
+EndGlobal

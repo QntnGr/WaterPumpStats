@@ -9,7 +9,8 @@ public class MeasurementPumpService : IMeasurementPumpService
         DateTime? endPerdiod = null;
         for (int i = 0; i < onOffMeasures.Count(); i++)
         {
-            if (onOffMeasures[i].Time > start)
+            if (onOffMeasures[i].Time > start
+                && !startPerdiod.HasValue)
             {
                 if (onOffMeasures[i].IsRunning)
                 {

@@ -4,14 +4,17 @@ namespace TestProjectWaterPumpStats
 {
     public class UnitTest1
     {
-        [Fact]
-        public void Test1()
+        [Theory]
+        [InlineData("2019-01-10T11:00:00", "2019-01-10T13:00:00", "01:21:00")]
+        [InlineData("2019-01-10T10:00:00", "2019-01-10T15:00:00", "02:57:02")]
+        public void Test1(string startStr, string endStr, string expectedStr)
         {
 
             IMeasurementPumpService measurementPumpService = new MeasurementPumpService();
-            DateTime start = new DateTime(2019, 1, 10, 11, 0, 0);
-            DateTime end = new DateTime(2019, 1, 10, 13, 0, 0);
-            TimeSpan expected = new TimeSpan(1, 21, 00);
+            DateTime start = DateTime.Parse(startStr);
+            DateTime end = DateTime.Parse(endStr);
+            TimeSpan expected = TimeSpan.Parse(expectedStr);
+
             TimeSpan result = measurementPumpService.GetRunningDurationOnPeriod(TestPumpData(), start, end);
 
             Assert.Equal(expected, result);

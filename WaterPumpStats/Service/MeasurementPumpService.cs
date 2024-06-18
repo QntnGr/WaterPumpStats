@@ -9,7 +9,7 @@ public class MeasurementPumpService : IMeasurementPumpService
         DateTime? endPerdiod = null;
         bool isStart = true;
 
-        foreach (var measure in onOffMeasures.ToDictionary(m => m.Time))
+        foreach (var measure in  new SortedList<DateTime, Measure>(onOffMeasures.ToDictionary(m => m.Time)))
         {
             if (measure.Key > start
                 && !startPerdiod.HasValue)

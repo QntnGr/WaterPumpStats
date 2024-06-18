@@ -7,26 +7,35 @@ public class MeasurementPumpService : IMeasurementPumpService
         TimeSpan result = TimeSpan.Zero;
         DateTime? startPerdiod = null;
         DateTime? endPerdiod = null;
-        for (int i = 0; i < onOffMeasures.Count(); i++)
+        bool isStart = true;
+
+        foreach (var measure in onOffMeasures.ToDictionary(m => m.Time))
         {
-            if (onOffMeasures[i].Time > start
+            if (measure.Key > start
                 && !startPerdiod.HasValue)
             {
-                if (onOffMeasures[i].IsRunning)
+                if (measure.Value.IsRunning)
                 {
-                    startPerdiod = onOffMeasures[i].Time;
+                    startPerdiod = measure.Key;
                 }
-                else if (i > 0 && onOffMeasures[i - 1].IsRunning)
+                else if(result ==  TimeSpan.Zero
+                    && !isStart)
                 {
                     startPerdiod = start;
+                    endPerdiod = measure.Key;
                 }
+                isStart = false;
+                continue;
             }
+            isStart = false;
             if (startPerdiod.HasValue
-                && startPerdiod != onOffMeasures[i].Time
-                && onOffMeasures[i].Time < end
-                && !onOffMeasures[i].IsRunning)
+                && !endPerdiod.HasValue
+                && measure.Key < end)
             {
-                endPerdiod = onOffMeasures[i].Time;
+                if(!measure.Value.IsRunning)
+                {
+                    endPerdiod = measure.Key;
+                }
             }
             if (startPerdiod.HasValue
                 && endPerdiod.HasValue)

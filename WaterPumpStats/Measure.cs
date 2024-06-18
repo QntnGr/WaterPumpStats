@@ -11,5 +11,4 @@ public class Measure
         Time = time;
         IsRunning = status == 1;
     }
-
 }

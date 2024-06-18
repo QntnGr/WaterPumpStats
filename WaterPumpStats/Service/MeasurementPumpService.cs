@@ -17,6 +17,7 @@ public class MeasurementPumpService : IMeasurementPumpService
                 if (measure.Value.IsRunning)
                 {
                     startPerdiod = measure.Key;
+                    continue;
                 }
                 else if(result ==  TimeSpan.Zero
                     && !isStart)
@@ -25,7 +26,6 @@ public class MeasurementPumpService : IMeasurementPumpService
                     endPerdiod = measure.Key;
                 }
                 isStart = false;
-                continue;
             }
             isStart = false;
             if (startPerdiod.HasValue

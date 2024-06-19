@@ -1,4 +1,6 @@
-﻿namespace WaterPumpStats.Service;
+﻿using System.Collections.Generic;
+
+namespace WaterPumpStats.Service;
 
 public class MeasurementPumpService : IMeasurementPumpService
 {
@@ -7,35 +9,44 @@ public class MeasurementPumpService : IMeasurementPumpService
         TimeSpan result = TimeSpan.Zero;
         DateTime? startPerdiod = null;
         DateTime? endPerdiod = null;
-        bool isStart = true;
 
-        foreach (var measure in  new SortedList<DateTime, Measure>(onOffMeasures.ToDictionary(m => m.Time)))
+        SortedDictionary<DateTime, Measure> sortedMeasures = new SortedDictionary<DateTime, Measure>(
+            onOffMeasures.ToDictionary(m => m.Time)
+                 .Where(m => m.Key >= start && m.Key <= end)
+                 .ToDictionary(m => m.Key, m => m.Value)
+        );
+        int i = 0;
+        int maxItem = sortedMeasures.Count;
+
+        foreach (var measure in sortedMeasures)
         {
-            if (measure.Key > start
-                && !startPerdiod.HasValue)
+            i++;
+            if (!startPerdiod.HasValue)
             {
                 if (measure.Value.IsRunning)
                 {
                     startPerdiod = measure.Key;
-                    continue;
+                    if (i == maxItem)
+                    {
+                        endPerdiod = end;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
-                else if(result ==  TimeSpan.Zero
-                    && !isStart)
+                else if (i == maxItem)
                 {
                     startPerdiod = start;
                     endPerdiod = measure.Key;
                 }
-                isStart = false;
             }
-            isStart = false;
+
             if (startPerdiod.HasValue
-                && !endPerdiod.HasValue
-                && measure.Key < end)
+            && !endPerdiod.HasValue
+            && !measure.Value.IsRunning)
             {
-                if(!measure.Value.IsRunning)
-                {
-                    endPerdiod = measure.Key;
-                }
+                endPerdiod = measure.Key;
             }
             if (startPerdiod.HasValue
                 && endPerdiod.HasValue)

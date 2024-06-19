@@ -7,6 +7,7 @@ namespace TestProjectWaterPumpStats
         [Theory]
         [InlineData("2019-01-10T11:00:00", "2019-01-10T13:00:00", "01:21:00")]
         [InlineData("2019-01-10T10:00:00", "2019-01-10T15:00:00", "02:57:02")]
+        [InlineData("2019-01-10T10:00:00", "2019-01-10T14:14:12", "02:26:00")]
         public void Test1(string startStr, string endStr, string expectedStr)
         {
 

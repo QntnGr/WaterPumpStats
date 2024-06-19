@@ -8,6 +8,8 @@ namespace TestProjectWaterPumpStats
         [InlineData("2019-01-10T11:00:00", "2019-01-10T13:00:00", "01:21:00")]
         [InlineData("2019-01-10T10:00:00", "2019-01-10T15:00:00", "02:57:02")]
         [InlineData("2019-01-10T10:00:00", "2019-01-10T14:14:12", "02:26:00")]
+        [InlineData("2019-01-10T10:30:00", "2019-01-10T11:05:00", "00:10:00")]
+        [InlineData("2019-01-10T10:30:00", "2019-01-10T15:30:00", "03:14:48")]
         public void Test1(string startStr, string endStr, string expectedStr)
         {
 
@@ -31,6 +33,8 @@ namespace TestProjectWaterPumpStats
                 new Measure(new DateTime(2019, 1, 10, 12, 21, 0), 0),
                 new Measure(new DateTime(2019, 1, 10, 13, 14, 12), 1),
                 new Measure(new DateTime(2019, 1, 10, 14, 45, 14), 0),
+                new Measure(new DateTime(2019, 1, 10, 15, 12, 14), 1),
+                new Measure(new DateTime(2019, 1, 10, 15, 44, 14), 0),
             };
         }
     }

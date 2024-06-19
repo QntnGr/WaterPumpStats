@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace WaterPumpStats.Service;
 
@@ -10,46 +11,56 @@ public class MeasurementPumpService : IMeasurementPumpService
         DateTime? startPerdiod = null;
         DateTime? endPerdiod = null;
 
-        SortedDictionary<DateTime, Measure> sortedMeasures = new SortedDictionary<DateTime, Measure>(
+        SortedList<DateTime, Measure> sortedMeasures = new SortedList<DateTime, Measure>(
             onOffMeasures.ToDictionary(m => m.Time)
                  .Where(m => m.Key >= start && m.Key <= end)
                  .ToDictionary(m => m.Key, m => m.Value)
         );
+
+        //var getRunningValue = sortedMeasures.GetValueAtIndex(sortedMeasures.IndexOfKey(sortedMeasures.First().Key) - 1).IsRunning;
+
         int i = 0;
-        int maxItem = sortedMeasures.Count;
+        int lastItem = sortedMeasures.Count;
+
 
         foreach (var measure in sortedMeasures)
         {
             i++;
             if (!startPerdiod.HasValue)
             {
-                if (measure.Value.IsRunning)
+                if (i == lastItem)
                 {
-                    startPerdiod = measure.Key;
-                    if (i == maxItem)
+                    if (measure.Value.IsRunning)
                     {
+                        startPerdiod = measure.Key;
                         endPerdiod = end;
+                    }
+                    else
+                    {
+                        startPerdiod = start;
+                        endPerdiod = measure.Key;
+                    }
+                }
+                else
+                {
+                    if (measure.Value.IsRunning)
+                    {
+                        startPerdiod = measure.Key;
                     }
                     else
                     {
                         continue;
                     }
                 }
-                else if (i == maxItem)
-                {
-                    startPerdiod = start;
-                    endPerdiod = measure.Key;
-                }
             }
 
-            if (startPerdiod.HasValue
-            && !endPerdiod.HasValue
+            if (!endPerdiod.HasValue
             && !measure.Value.IsRunning)
             {
                 endPerdiod = measure.Key;
             }
-            if (startPerdiod.HasValue
-                && endPerdiod.HasValue)
+
+            if (endPerdiod.HasValue)
             {
                 result += endPerdiod.Value - startPerdiod.Value;
                 startPerdiod = null;
